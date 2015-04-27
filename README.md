@@ -1,3 +1,6 @@
+This fork is being used for testing plugin with PhoneGap Build - May be behind original.
+
+
 This is a cordova plugin to assist in several video editing tasks such as:
 
 * Transcoding
