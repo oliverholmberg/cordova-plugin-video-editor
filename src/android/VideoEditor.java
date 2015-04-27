@@ -107,6 +107,7 @@ public class VideoEditor extends CordovaPlugin {
         );
         final int videoQuality = options.optInt("quality", HighQuality);
         final int outputType = options.optInt("outputFileType", MPEG4);
+        final int outputVideoBitrate;
         
         Log.d(TAG, "videoSrcPath: " + videoSrcPath);
                         
@@ -131,14 +132,27 @@ public class VideoEditor extends CordovaPlugin {
         
         switch(videoQuality) {
             case LowQuality:
-                outputResolution = "320x320";
+                outputResolution = "360x202";
                 break;
             case MediumQuality:
-                outputResolution = "480x480";
+                outputResolution = "720x406";
                 break;
             case HighQuality:
             default:
-                outputResolution = "640x640"; 
+                outputResolution = "1280x720"; 
+                break;
+        }
+        
+        switch(videoQuality) {
+            case LowQuality:
+                outputVideoBitrate = "256000"; //250kbps
+                break;
+            case MediumQuality:
+                outputVideoBitrate = "512000"; //500kbps
+                break;
+            case HighQuality:
+            default:
+                outputVideoBitrate = "1258291"; //1.2mbps
                 break;
         }
         
@@ -204,13 +218,13 @@ public class VideoEditor extends CordovaPlugin {
                     al.add("-preset");
                     al.add("ultrafast"); // needed b/c libx264 doesn't utilize all CPU cores
                     al.add("-b");
-                    al.add("2097152"); // TODO: allow tuning the video bitrate based on quality plugin argument
-                    //al.add("-ab"); // can't find this in ffmpeg docs, not sure on this yet
+                    al.add(outputVideoBitrate); // Video bitrate
+                    //al.add("-ab"); // Audio bitrate TODO: This should be adjustable too...
                     //al.add("48000");
                     al.add("-ac"); // audio channels 
                     al.add("1");
-                    al.add("-ar"); // sampling frequency
-                    al.add("22050"); 
+                    al.add("-ar"); // Audio Sample Rate 44.1kHz should so fine
+                    al.add("44100"); 
                     if (videoDuration != 0) {
                         //al.add("-ss"); // start position may be either in seconds or in hh:mm:ss[.xxx] form.
                         //al.add("0");
