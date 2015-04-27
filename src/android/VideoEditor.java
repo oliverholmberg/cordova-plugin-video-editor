@@ -107,7 +107,7 @@ public class VideoEditor extends CordovaPlugin {
         );
         final int videoQuality = options.optInt("quality", HighQuality);
         final int outputType = options.optInt("outputFileType", MPEG4);
-        final int outputVideoBitrate;
+        final String outputVideoBitrate;
         
         Log.d(TAG, "videoSrcPath: " + videoSrcPath);
                         
@@ -145,14 +145,14 @@ public class VideoEditor extends CordovaPlugin {
         
         switch(videoQuality) {
             case LowQuality:
-                outputVideoBitrate = 256000; //250kbps
+                outputVideoBitrate = "256000"; //250kbps
                 break;
             case MediumQuality:
-                outputVideoBitrate = 512000; //500kbps
+                outputVideoBitrate = "512000"; //500kbps
                 break;
             case HighQuality:
             default:
-                outputVideoBitrate = 1258291; //1.2mbps
+                outputVideoBitrate = "1258291"; //1.2mbps
                 break;
         }
         
